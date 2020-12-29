@@ -16,6 +16,7 @@ buildscript {
 
 rootProject.allprojects {
     repositories {
+        maven { url "file:/Users/kleeb/tmp/mvn" }
         maven { url "file:/Users/vagrant/tmp/mvn" }
         google()
         jcenter()
