@@ -70,6 +70,11 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
 
             val eventChannel = EventChannel(registrar.messenger(), JITSI_EVENT_CHANNEL)
             eventChannel.setStreamHandler(JitsiMeetEventStreamHandler.instance)
+
+            registrar
+                    .platformViewRegistry()
+                    .registerViewFactory(
+                            "breaklounge/jitsiview", JitsiViewFactory(registrar.messenger()))
         }
 
         const val JITSI_PLUGIN_TAG = "JITSI_MEET_PLUGIN"
