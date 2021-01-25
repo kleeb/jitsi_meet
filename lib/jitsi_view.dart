@@ -23,7 +23,7 @@ class _TextViewState extends State<JitsiView> {
   Widget build(BuildContext context) {
     if (defaultTargetPlatform == TargetPlatform.android) {
       return AndroidView(
-        viewType: 'ponnamkarthik/flutterwebview',
+        viewType: 'breaklounge/jitsiview',
         onPlatformViewCreated: _onPlatformViewCreated,
       );
     }
