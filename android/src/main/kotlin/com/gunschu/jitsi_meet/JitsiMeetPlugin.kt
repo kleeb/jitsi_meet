@@ -44,6 +44,9 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
 
         eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, JITSI_EVENT_CHANNEL)
         eventChannel.setStreamHandler(JitsiMeetEventStreamHandler.instance)
+
+        flutterPluginBinding.getPlatformViewRegistry().registerViewFactory(
+                "breaklounge/jitsiview", JitsiViewFactory(flutterPluginBinding.binaryMessenger))
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
@@ -63,6 +66,11 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
     companion object {
         @JvmStatic
         fun registerWith(registrar: Registrar) {
+            registrar
+                    .platformViewRegistry()
+                    .registerViewFactory(
+                            "breaklounge/jitsiview", JitsiViewFactory(registrar.messenger()))
+
             val plugin = JitsiMeetPlugin(registrar.activity())
             val channel = MethodChannel(registrar.messenger(), JITSI_METHOD_CHANNEL)
             channel.setMethodCallHandler(plugin)
@@ -70,11 +78,6 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
 
             val eventChannel = EventChannel(registrar.messenger(), JITSI_EVENT_CHANNEL)
             eventChannel.setStreamHandler(JitsiMeetEventStreamHandler.instance)
-
-            registrar
-                    .platformViewRegistry()
-                    .registerViewFactory(
-                            "breaklounge/jitsiview", JitsiViewFactory(registrar.messenger()))
         }
 
         const val JITSI_PLUGIN_TAG = "JITSI_MEET_PLUGIN"
